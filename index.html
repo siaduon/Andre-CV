@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANDRE PANGARIBUAN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --tech-cyan: #22d3ee;
+            --tech-blue: #3b82f6;
+            --dark-bg: #020617;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(34, 211, 238, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.05), transparent 25%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+            background-attachment: fixed;
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glow-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 10px 40px -10px rgba(34, 211, 238, 0.3);
+            border-color: rgba(34, 211, 238, 0.5);
+            transform: translateY(-5px);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-load {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-cyan-500/30">
+
+    <nav class="fixed w-full z-50 glass border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center relative">
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <div
+                    class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-slate-900 shadow-[0_0_10px_rgba(34,211,238,0.5)] group-hover:scale-105 transition-transform">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4">
+                        </path>
+                    </svg>
+                </div>
+                <span class="text-xl font-bold tracking-tight mono">WEB<span class="text-cyan-400">.</span>ANDRE</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="space-x-8 hidden md:flex text-sm font-medium text-slate-400 items-center">
+                <a href="#home" class="hover:text-cyan-400 transition">Home</a>
+                <a href="#about" class="hover:text-cyan-400 transition">About CV</a>
+                <a href="#work" class="hover:text-cyan-400 transition">Portfolio</a>
+                <a href="mailto:andrepangaribuan037@gmail.com"
+                    class="text-cyan-400 border border-cyan-400/30 px-4 py-1.5 rounded-full hover:bg-cyan-400/10 transition">Contact</a>
+                <a href="admin.html"
+                    class="text-cyan-400 border border-cyan-400/30 px-4 py-1.5 rounded-full hover:bg-cyan-400/10 transition">Admin</a>
+
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn"
+                class="md:hidden text-slate-300 hover:text-cyan-400 focus:outline-none transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute left-0 top-full w-full glass border-b border-slate-800 shadow-2xl">
+            <div class="flex flex-col space-y-4 px-6 py-6 text-sm font-medium text-slate-300">
+                <a href="#home"
+                    class="mobile-link hover:text-cyan-400 transition font-mono tracking-widest text-[13px] uppercase">Home</a>
+                <a href="#about"
+                    class="mobile-link hover:text-cyan-400 transition font-mono tracking-widest text-[13px] uppercase">About
+                    CV</a>
+                <a href="#work"
+                    class="mobile-link hover:text-cyan-400 transition font-mono tracking-widest text-[13px] uppercase">Portfolio</a>
+                <a href="mailto:andrepangaribuan037@gmail.com"
+                    class="mobile-link text-center text-cyan-400 border border-cyan-400/30 px-4 py-2 mt-2 rounded-full hover:bg-cyan-400/10 transition font-mono tracking-widest text-[13px] uppercase">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="pt-40 pb-20 px-6 relative overflow-hidden">
+        <div
+            class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] -z-10">
+        </div>
+        <div class="max-w-4xl mx-auto text-center animate-load">
+            <div
+                class="inline-block px-4 py-1.5 rounded-full bg-slate-800/50 border border-slate-700 text-cyan-400 text-xs font-bold mb-6 mono tracking-widest uppercase">
+                &lt; SEMUA BERASAL DARI RASA INGIN TAHU /&gt;
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tighter leading-tight">
+                Andre Siaduon Pangaribuan <br>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Ahli Madya
+                    Komputer</span>
+            </h1>
+            <p id="hero-bio" class="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto">Menghubungkan
+                database...</p>
+            <div class="flex flex-wrap justify-center gap-6 mt-12 w-full max-w-lg mx-auto">
+                <a href="#work"
+                    class="flex-1 min-w-[200px] justify-center text-center bg-cyan-500 text-slate-900 px-8 py-4 rounded-xl font-bold hover:bg-cyan-400 transition shadow-xl shadow-cyan-500/30 flex items-center gap-2 tracking-wide block sm:inline-flex">
+                    <svg class="w-5 h-5 mx-auto sm:mx-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                    <span>View Projects</span>
+                </a>
+                <a href="#" onclick="downloadPDFCV(event)"
+                    class="flex-1 min-w-[200px] justify-center text-center glass px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition border border-slate-700 hover:border-cyan-400 flex items-center gap-2 text-cyan-50 block sm:inline-flex group">
+                    <svg class="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform mx-auto sm:mx-0"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <span>Download CV</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-slate-950/50 border-y border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-4 space-y-6">
+                    <h2 class="text-3xl font-bold mono"><span class="text-cyan-400">01.</span> Profile</h2>
+                    <div class="glass p-6 rounded-2xl border-slate-700">
+                        <img id="profile-img"
+                            src="https://ui-avatars.com/api/?name=User&background=020617&color=22d3ee&size=200"
+                            class="w-24 h-24 rounded-xl mb-4 border border-slate-700 object-cover" alt="Avatar">
+                        <h3 id="profile-name" class="text-xl font-bold text-white tracking-tight">Nama Anda</h3>
+                        <p id="profile-title" class="text-cyan-400 text-sm mb-4 font-medium italic italic">IT
+                            Professional</p>
+                        <p id="profile-bio-detail" class="text-slate-400 text-sm leading-relaxed">Loading bio detail...
+                        </p>
+                    </div>
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold uppercase text-slate-500 mono tracking-widest">Main Skills</h4>
+                        <div id="skills-container" class="flex flex-wrap gap-2 mb-6"></div>
+                        <h4 class="text-sm font-bold uppercase text-slate-500 mono tracking-widest mt-6">Connect</h4>
+                        <div class="flex flex-wrap gap-4 mt-2">
+                            <a href="https://www.instagram.com/andre_pangaribuan17/"
+                                class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition hover:-translate-y-1"><svg
+                                    class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.975-9.658a1.425 1.425 0 100-2.85 1.425 1.425 0 000 2.85z" />
+                                </svg></a>
+                            <a href="https://www.tiktok.com/@andre_pangaribuan17"
+                                class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition hover:-translate-y-1"><svg
+                                    class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.82 5.36-1.5 1.59-3.8 2.33-5.91 2.07-2.51-.31-4.56-2.18-5.26-4.63-.73-2.53.11-5.35 2.05-7.01 1.74-1.49 4.2-2.02 6.36-1.44V13.8c-1.22-.52-2.73-.39-3.8.41-1.24.93-1.63 2.76-1.02 4.1.6 1.33 2.21 2.08 3.65 1.83 1.37-.23 2.37-1.41 2.5-2.8.06-.63.07-1.26.07-1.89l-.02-15.43z" />
+                                </svg></a>
+                            <a href="https://www.youtube.com/@andre_pangaribuan17"
+                                class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition hover:-translate-y-1"><svg
+                                    class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                </svg></a>
+                            <a href="lynk.id/skillupwithandre"
+                                class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition hover:-translate-y-1 font-bold font-mono tracking-tighter text-sm">LY.</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-8 space-y-10">
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-3"><span
+                                class="w-8 h-[1px] bg-cyan-400"></span> Pengalaman Kerja</h3>
+                        <div id="work-container" class="space-y-8 text-slate-500 italic">Memuat pengalaman...</div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-3"><span
+                                class="w-8 h-[1px] bg-cyan-400"></span> Edukasi</h3>
+                        <div id="edu-container" class="space-y-4 text-slate-500 italic">Memuat edukasi...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="py-20 bg-dark-bg">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mono mb-4"><span class="text-cyan-400">02.</span> My Portfolio</h2>
+                <p class="text-slate-400">Kumpulan karya terbaik dalam pengembangan software.</p>
+            </div>
+            <div class="flex justify-center mb-12">
+                <div class="inline-flex bg-slate-900 border border-slate-800 rounded-full p-1 relative shadow-inner">
+                    <button onclick="switchTab('project')" id="btn-project"
+                        class="relative z-10 px-6 py-2.5 rounded-full mono text-sm font-bold transition-all duration-300 text-cyan-50 bg-cyan-500/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+                        🚀 Projects
+                    </button>
+                    <button onclick="switchTab('certificate')" id="btn-certificate"
+                        class="relative z-10 px-6 py-2.5 rounded-full mono text-sm font-bold transition-all duration-300 text-slate-400 hover:text-slate-200">
+                        📜 Certificates
+                    </button>
+                </div>
+            </div>
+            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-slate-900 text-center">
+        <p class="text-slate-600 text-[10px] mono uppercase tracking-widest">© 2026 <span id="footer-name">User</span> -
+            Built with System Precision</p>
+    </footer>
+
+    <script>
+        // GANTI INI DENGAN URL DEPLOYMENT GOOGLE APPS SCRIPT ANDA
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxi0diq4LMgZgDvbRpmI4yp2FDVGpSzMu4lse_rb_J_hiEKWCT50EN9zjiMDL0PfSWVcQ/exec';
+
+        // GLOBAL DATA FOR PDF
+        let globalProfile = {};
+        let globalWork = [];
+        let globalEdu = [];
+        let globalSkills = [];
+        let globalProj = [];
+        let globalCert = [];
+
+        // Helper: Format Google Drive Image URL
+        function getImgUrl(url) {
+            if (!url || url === "no_file" || url === "") return 'https://via.placeholder.com/800x450?text=No+Image';
+            const fileId = url.match(/[-\w]{25,}/);
+            return fileId ? `https://drive.google.com/thumbnail?id=${fileId[0]}&sz=w800` : url;
+        }
+
+        // 1. Load Profile Data
+        async function loadProfile() {
+            try {
+                const response = await fetch(`${API_URL}?tab=Profile`);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    const p = data[0];
+                    globalProfile = p;
+                    document.getElementById('profile-name').innerText = p['Nama Lengkap'] || 'User';
+                    document.getElementById('footer-name').innerText = p['Nama Lengkap'] || 'User';
+                    document.getElementById('profile-title').innerText = p['Title'] || 'Professional';
+                    document.getElementById('hero-bio').innerText = p['Bio'] || '';
+                    document.getElementById('profile-bio-detail').innerText = p['Bio'] || '';
+
+                    if (p['URL Foto Profil']) document.getElementById('profile-img').src = getImgUrl(p['URL Foto Profil']);
+
+                    if (p['Skills']) {
+                        globalSkills = p['Skills'].split(',');
+                        document.getElementById('skills-container').innerHTML = globalSkills.map(s =>
+                            `<span class="px-3 py-1 bg-slate-800 rounded text-xs text-cyan-300 border border-slate-700">${s.trim()}</span>`
+                        ).join('');
+                    }
+                }
+            } catch (e) { console.error("Error Profile:", e); }
+        }
+
+        // 2. Pre-fetch All Grid Data
+        async function loadCV() {
+            try {
+                const [resW, resE, resP, resC] = await Promise.all([
+                    fetch(`${API_URL}?tab=Work`),
+                    fetch(`${API_URL}?tab=Education`),
+                    fetch(`${API_URL}?tab=Project`),
+                    fetch(`${API_URL}?tab=Sertifikat`)
+                ]);
+
+                globalWork = await resW.json();
+                globalEdu = await resE.json();
+                globalProj = await resP.json();
+                globalCert = await resC.json();
+
+                if (globalWork && globalWork.length > 0) {
+                    document.getElementById('work-container').innerHTML = globalWork.map(w => `
+                        <div class="relative pl-6 border-l border-slate-800 animate-load">
+                            <div class="absolute w-3 h-3 bg-cyan-500 rounded-full -left-[6.5px] top-1 shadow-[0_0_10px_#22d3ee]"></div>
+                            <h4 class="font-bold text-lg text-white">${w['Posisi'] || ''} - ${w['Perusahaan'] || ''}</h4>
+                            <p class="text-cyan-400 text-sm mono">${w['Tahun Mulai']} - ${w['Tahun Akhir'] || 'Present'}</p>
+                            <p class="text-slate-400 mt-2 text-sm leading-relaxed">${w['Deskripsi'] || ''}</p>
+                        </div>
+                    `).join('');
+                }
+
+                if (globalEdu && globalEdu.length > 0) {
+                    document.getElementById('edu-container').innerHTML = globalEdu.map(e => `
+                        <div class="glass p-6 rounded-xl border-slate-800 animate-load">
+                            <h4 class="font-bold text-white">${e['Jurusan'] || ''}</h4>
+                            <p class="text-slate-400 text-sm">${e['Kampus']} • ${e['Tahun Mulai']} - ${e['Tahun Akhir']}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) { console.error("Error CV:", e); }
+        }
+
+        // 3. Tab Management (Portfolio)
+        function switchTab(type) {
+            const container = document.getElementById('grid-container');
+            const btnP = document.getElementById('btn-project');
+            const btnC = document.getElementById('btn-certificate');
+
+            const activeClasses = ['text-cyan-50', 'bg-cyan-500/20', 'shadow-[0_0_15px_rgba(34,211,238,0.2)]'];
+            const inactiveClasses = ['text-slate-400', 'hover:text-slate-200'];
+
+            if (type === 'project') {
+                btnP.classList.add(...activeClasses); btnP.classList.remove(...inactiveClasses);
+                btnC.classList.add(...inactiveClasses); btnC.classList.remove(...activeClasses);
+            } else {
+                btnC.classList.add(...activeClasses); btnC.classList.remove(...inactiveClasses);
+                btnP.classList.add(...inactiveClasses); btnP.classList.remove(...activeClasses);
+            }
+
+            const data = type === 'project' ? globalProj : globalCert;
+
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="col-span-full text-center py-10 text-slate-500 italic">Data tidak ditemukan atau loading...</p>';
+                return;
+            }
+
+            container.innerHTML = data.map(item => {
+                if (type === 'project') {
+                    const techs = (item['Teknologi'] || '').split(',');
+                    return `
+                        <div class="group glass rounded-2xl overflow-hidden glow-hover transition-all animate-load">
+                            <div class="h-48 overflow-hidden"><img src="${getImgUrl(item['URL Gambar'])}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"></div>
+                            <div class="p-6">
+                                <div class="flex flex-wrap gap-2 mb-3">${techs.map(t => `<span class="text-[10px] mono px-2 py-0.5 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded">${t.trim()}</span>`).join('')}</div>
+                                <h3 class="text-lg font-bold mb-2 text-white">${item['Nama Project'] || ''}</h3>
+                                <p class="text-slate-400 text-sm mb-5 line-clamp-3">${item['Deskripsi'] || ''}</p>
+                                <a href="${item['Link'] || '#'}" target="_blank" class="text-xs font-bold mono text-cyan-400 hover:tracking-widest transition-all">VIEW_PROJECT >></a>
+                            </div>
+                        </div>`;
+                } else {
+                    return `
+                        <div class="glass rounded-2xl overflow-hidden glow-hover animate-load p-6 text-center">
+                            <span class="text-[10px] mono text-cyan-500 font-bold uppercase">${item['Tahun'] || ''}</span>
+                            <h3 class="text-md font-bold mt-1 text-white">${item['Nama Sertifikat'] || ''}</h3>
+                            <p class="text-slate-500 text-xs mb-4">Issued by ${item['Penerbit'] || ''}</p>
+                            <a href="${item['Link'] || '#'}" target="_blank" class="inline-block w-full py-2 rounded-lg text-xs mono border border-slate-700 text-cyan-400 hover:bg-cyan-500 hover:text-slate-900 transition">VERIFY_CERT</a>
+                        </div>`;
+                }
+            }).join('');
+        }
+
+        // PDF Generator
+        function downloadPDFCV(e) {
+            e.preventDefault();
+            const btn = e.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="animate-pulse flex items-center justify-center gap-2 w-full"><svg class="w-5 h-5 animate-spin text-cyan-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> GENERATING...</span>';
+
+            const p = globalProfile;
+            const wHtml = globalWork.map(w => `<div style="margin-bottom:12px; page-break-inside:avoid;"><div style="display:flex; justify-content:space-between; align-items:baseline;"><h4 style="margin:0; font-size:15px; color:#0f172a; font-weight:700;">${w['Posisi']}</h4><span style="font-size:12px; color:#64748b; font-weight:500; background:#f1f5f9; padding:2px 8px; border-radius:12px;">${w['Tahun Mulai']} - ${w['Tahun Akhir'] || 'Present'}</span></div><div style="font-size:13px; color:#0ea5e9; font-weight:600; margin-bottom:4px;">${w['Perusahaan']}</div><p style="margin:0; font-size:12px; line-height:1.5; color:#475569;">${w['Deskripsi'] || ''}</p></div>`).join('');
+            const eHtml = globalEdu.map(ed => `<div style="margin-bottom:10px; page-break-inside:avoid;"><div style="display:flex; justify-content:space-between; align-items:baseline;"><h4 style="margin:0; font-size:14px; color:#0f172a; font-weight:700;">${ed['Jurusan']}</h4><span style="font-size:12px; color:#64748b;">${ed['Tahun Mulai']} - ${ed['Tahun Akhir']}</span></div><div style="font-size:13px; color:#475569; font-weight:500;">${ed['Kampus']}</div></div>`).join('');
+            const sHtml = globalSkills.map(s => `<span style="background:#f8fafc; padding:4px 10px; border-radius:4px; font-size:11px; color:#334155; border:1px solid #cbd5e1; font-weight:500;">${s.trim()}</span>`).join('');
+            const pHtml = globalProj.map(pj => `<div style="margin-bottom:10px; page-break-inside:avoid;"><h4 style="margin:0 0 2px 0; font-size:14px; color:#0f172a; font-weight:700;">${pj['Nama Project']} <span style="font-size:11px; font-weight:normal; color:#64748b;">— ${(pj['Teknologi'] || '').split(',').join(' | ')}</span></h4><p style="margin:0; font-size:12px; line-height:1.4; color:#475569;">${pj['Deskripsi']}</p></div>`).join('');
+            const cHtml = globalCert.map(c => `<div style="margin-bottom:6px; page-break-inside:avoid;"><div style="display:flex; justify-content:space-between; align-items:baseline;"><h4 style="margin:0; font-size:13px; color:#0f172a; font-weight:700;">${c['Nama Sertifikat']}</h4><span style="font-size:12px; color:#64748b;">${c['Tahun']}</span></div><div style="font-size:12px; color:#475569;">${c['Penerbit']}</div></div>`).join('');
+
+            const imgDom = p['URL Foto Profil'] ? `<img src="${getImgUrl(p['URL Foto Profil'])}" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-right: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" crossorigin="anonymous">` : '';
+
+            const cvHtml = `
+            <div id="pdf-cv-container" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e293b; padding: 0; background: white; width: 794px; min-height: 1123px; box-sizing: border-box; text-align: left;">
+                <div style="display: flex; align-items: center; justify-content: flex-start; border-bottom: 2px solid #0ea5e9; padding-bottom: 15px; margin-bottom: 20px;">
+                    ${imgDom}
+                    <div style="text-align: left;">
+                        <h1 style="margin: 0 0 4px 0; font-size: 32px; color: #0f172a; font-weight: 800; letter-spacing: -1px; text-align: left;">${p['Nama Lengkap'] || 'Nama User'}</h1>
+                        <h2 style="margin: 0; font-size: 16px; color: #0ea5e9; font-weight: 500; text-align: left;">${p['Title'] || 'Professional'}</h2>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3 style="font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 10px; font-weight: 700;">Profile Detail</h3>
+                    <p style="font-size: 13px; line-height: 1.6; color: #334155; margin: 0;">${p['Bio'] || ''}</p>
+                </div>
+                
+                ${globalWork.length > 0 ? `<div style="margin-bottom: 20px;"><h3 style="font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700;">Professional Experience</h3>${wHtml}</div>` : ''}
+
+                ${globalEdu.length > 0 ? `<div style="margin-bottom: 20px; page-break-inside: avoid;"><h3 style="font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700;">Education Background</h3>${eHtml}</div>` : ''}
+
+                ${globalProj.length > 0 ? `<div style="margin-bottom: 20px; page-break-inside: avoid;"><h3 style="font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700;">Key Projects</h3>${pHtml}</div>` : ''}
+
+                ${globalCert.length > 0 ? `<div style="margin-bottom: 20px; page-break-inside: avoid;"><h3 style="font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700;">Certifications</h3>${cHtml}</div>` : ''}
+
+                ${globalSkills.length > 0 ? `<div style="page-break-inside: avoid;"><h3 style="font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 10px; font-weight: 700;">Core Skills</h3><div style="display: flex; flex-wrap: wrap; gap: 8px;">${sHtml}</div></div>` : ''}
+            </div>
+            `;
+
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'fixed';
+            wrapper.style.top = '0';
+            wrapper.style.left = '-9999px';
+            wrapper.innerHTML = cvHtml;
+            document.body.appendChild(wrapper);
+
+            const opt = {
+                margin: [3, 3, 4, 2], // [top, left, bottom, right] in cm
+                filename: `CV_${(p['Nama Lengkap'] || 'User').replace(/ /g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollY: 0, windowY: 0 },
+                jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
+            };
+
+            setTimeout(() => { // small delay for dom render & img fetch crossover bounds
+                html2pdf().set(opt).from(wrapper.firstElementChild).save().then(() => {
+                    document.body.removeChild(wrapper);
+                    btn.innerHTML = originalText;
+                }).catch(err => {
+                    document.body.removeChild(wrapper);
+                    btn.innerHTML = originalText;
+                    alert('Download CV Gagal.');
+                });
+            }, 600);
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '<div class="col-span-full text-center py-10 mono text-cyan-400 animate-pulse mt-4">FETCHING DATABASE...</div>';
+
+            // Mobile menu logic
+            const btnMenu = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (btnMenu && mobileMenu) {
+                btnMenu.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+                document.querySelectorAll('.mobile-link').forEach(link => {
+                    link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+                });
+            }
+
+            await loadProfile();
+            await loadCV();
+            switchTab('project');
+        });
+    </script>
+</body>
+
+</html>

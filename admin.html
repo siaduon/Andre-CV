@@ -1,324 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Kontrol Portofolio | Admin</title>
+    <title>Admin System | Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-dark: #020617;
-            --card-dark: #0f172a;
-            --accent-cyan: #22d3ee;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-dark);
-            color: #f1f5f9;
-            margin: 0;
-        }
-
-        .tech-input {
-            width: 100%;
-            background-color: #000000 !important;
-            border: 1px solid #1e293b;
-            border-radius: 1rem;
-            padding: 0.85rem 1.25rem;
-            color: #ffffff !important;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .tech-input:focus {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.15);
-            transform: scale(1.01);
-        }
-
-        .glass-sidebar {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .main-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 1.25rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            color: #94a3b8;
-            margin-bottom: 0.5rem;
-            width: 100%;
-        }
-
-        .sidebar-item.active {
-            background-color: rgba(34, 211, 238, 0.1);
-            color: var(--accent-cyan);
-            box-shadow: inset 4px 0 0 var(--accent-cyan);
-        }
-
-        .sidebar-item:hover:not(.active) {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: white;
-        }
-
-        .label-tech {
-            display: block;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #64748b;
-            margin-bottom: 0.75rem;
-            margin-left: 0.5rem;
-        }
-
-        #sidebar {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        :root { --bg: #020617; --cyan: #22d3ee; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: white; }
+        .tech-input { width: 100%; background: black; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 0.75rem 1rem; color: white; outline: none; transition: 0.3s; }
+        .tech-input:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(34, 211, 238, 0.2); }
+        .sidebar-item { width: 100%; text-align: left; padding: 0.75rem 1rem; border-radius: 0.5rem; color: #94a3b8; transition: 0.3s; }
+        .sidebar-item.active { background: rgba(34, 211, 238, 0.1); color: var(--cyan); }
+        .glass { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
     </style>
 </head>
-
 <body class="min-h-screen">
 
     <div id="login-gate" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950 p-6">
-        <div class="main-card w-full max-w-md text-center fade-in">
-            <div
-                class="inline-flex items-center justify-center w-20 h-20 bg-cyan-500/10 rounded-3xl border border-cyan-500/20 mb-8 text-cyan-400">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                    </path>
-                </svg>
-            </div>
-            <h1 class="text-3xl font-extrabold tracking-tight mb-2">Admin Panel</h1>
-            <p class="text-slate-500 text-sm mb-10">Verification required to access cloud storage.</p>
-            <input type="password" id="pin-input" placeholder="••••••••"
-                class="tech-input text-center text-2xl tracking-[0.5em] mb-6">
-            <button onclick="login()"
-                class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-4 rounded-2xl transition-all shadow-lg shadow-cyan-500/20 active:scale-95">Masuk
-                Ke Sistem</button>
+        <div class="glass w-full max-w-md p-8 rounded-3xl text-center">
+            <h1 class="text-2xl font-bold mb-6">Verification Required</h1>
+            <input type="password" id="pin-input" placeholder="ENTER PIN" class="tech-input text-center text-2xl tracking-[0.5em] mb-4">
+            <button onclick="login()" id="btn-login" class="w-full bg-cyan-500 text-slate-950 font-bold py-3 rounded-xl hover:bg-cyan-400 transition">LOGIN SYSTEM</button>
         </div>
     </div>
 
-    <div id="dashboard" class="hidden min-h-screen">
-
-        <div
-            class="lg:hidden flex items-center justify-between p-5 bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
-            <div class="flex items-center gap-2">
-                <div
-                    class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-slate-950 font-bold italic">
-                    A</div>
-                <span class="font-bold tracking-tight">Console</span>
-            </div>
-            <button onclick="toggleSidebar()" class="p-2 text-cyan-400 focus:outline-none"><svg class="w-6 h-6"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg></button>
-        </div>
-
-        <div id="sidebar-overlay" onclick="toggleSidebar()"
-            class="fixed inset-0 bg-black/70 z-40 hidden lg:hidden backdrop-blur-sm"></div>
-
-        <aside id="sidebar"
-            class="fixed inset-y-0 left-0 w-80 glass-sidebar flex flex-col z-50 -translate-x-full lg:translate-x-0">
-            <div class="p-10">
-                <div class="hidden lg:flex items-center gap-3 mb-16">
-                    <div
-                        class="w-10 h-10 bg-cyan-500 rounded-2xl flex items-center justify-center text-slate-950 font-black italic shadow-lg shadow-cyan-400/20">
-                        A</div>
-                    <span class="font-bold text-2xl tracking-tighter">ADMIN<span class="text-cyan-500">.</span></span>
-                </div>
-
-                <nav class="space-y-1">
-                    <button onclick="switchTab('project')" id="tab-project" class="sidebar-item active">📁
-                        Proyek</button>
-                    <button onclick="switchTab('certificate')" id="tab-certificate" class="sidebar-item">📜
-                        Sertifikat</button>
-                    <button onclick="switchTab('work')" id="tab-work" class="sidebar-item">💼 Pengalaman</button>
-                    <button onclick="switchTab('education')" id="tab-education" class="sidebar-item">🎓 Edukasi</button>
-                    <button onclick="switchTab('profile')" id="tab-profile" class="sidebar-item">👤 Profil
-                        Utama</button>
-                </nav>
-            </div>
-            <div class="mt-auto p-10 border-t border-slate-800/50">
-                <button onclick="logout()"
-                    class="w-full flex items-center gap-4 px-6 py-4 text-red-400 font-bold text-sm hover:bg-red-500/5 rounded-2xl transition-all">🚪
-                    Selesaikan Sesi</button>
-            </div>
+    <div id="dashboard" class="hidden flex min-h-screen">
+        <aside class="w-64 glass p-6 border-r border-slate-800 hidden lg:flex flex-col">
+            <h2 class="text-xl font-bold mb-10 text-cyan-400 mono">ADMIN_PANEL</h2>
+            <nav class="space-y-2 flex-1">
+                <button onclick="switchTab('project')" id="tab-project" class="sidebar-item active">📁 Projects</button>
+                <button onclick="switchTab('certificate')" id="tab-certificate" class="sidebar-item">📜 Certificates</button>
+                <button onclick="switchTab('work')" id="tab-work" class="sidebar-item">💼 Experience</button>
+                <button onclick="switchTab('education')" id="tab-education" class="sidebar-item">🎓 Education</button>
+                <button onclick="switchTab('profile')" id="tab-profile" class="sidebar-item">👤 Profile</button>
+            </nav>
+            <button onclick="location.reload()" class="text-red-400 text-sm font-bold">LOGOUT</button>
         </aside>
 
-        <main class="lg:ml-80 p-6 md:p-16 flex-1">
-            <div class="max-w-6xl mx-auto">
-                <div class="mb-16">
-                    <h2 id="content-title" class="text-4xl font-black tracking-tighter mb-2">Kelola Proyek</h2>
-                    <p id="content-desc" class="text-slate-500 font-medium">Add new work record to your digital
-                        identity.</p>
-                </div>
+        <main class="flex-1 p-6 lg:p-12 overflow-y-auto">
+            <header class="mb-10">
+                <h2 id="content-title" class="text-3xl font-bold">Kelola Proyek</h2>
+                <p id="content-desc" class="text-slate-400">Update your digital works.</p>
+            </header>
 
-                <form id="main-form" onsubmit="handleUpload(event)" class="fade-in">
-                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-12">
-
-                        <div class="xl:col-span-2 space-y-8">
-                            <div class="main-card space-y-8">
-
-                                <div id="form-project" class="space-y-6">
-                                    <div><label class="label-tech">Judul Proyek</label><input type="text" id="p-title"
-                                            class="tech-input" placeholder="Nama Proyek..."></div>
-                                    <div><label class="label-tech">Deskripsi Singkat</label><textarea id="p-desc"
-                                            rows="4" class="tech-input" placeholder="Detail teknis..."></textarea></div>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <input type="url" id="p-link" class="tech-input" placeholder="Demo URL">
-                                        <input type="text" id="p-tech" class="tech-input"
-                                            placeholder="Tech Stack (Koma)">
-                                    </div>
-                                </div>
-
-                                <div id="form-certificate" class="hidden space-y-6">
-                                    <div><label class="label-tech">Nama Sertifikat</label><input type="text"
-                                            id="c-title" class="tech-input"></div>
-                                    <div class="grid grid-cols-2 gap-6">
-                                        <input type="text" id="c-issuer" class="tech-input" placeholder="Penerbit">
-                                        <input type="number" id="c-year" class="tech-input" placeholder="Tahun">
-                                    </div>
-                                    <input type="url" id="c-link" class="tech-input" placeholder="Credential URL">
-                                </div>
-
-                                <div id="form-work" class="hidden space-y-6">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <input type="text" id="w-job" class="tech-input" placeholder="Posisi / Jabatan">
-                                        <input type="text" id="w-company" class="tech-input" placeholder="Perusahaan">
-                                    </div>
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                                        <input type="number" id="w-start" class="tech-input" placeholder="Mulai">
-                                        <input type="text" id="w-end" class="tech-input" placeholder="Selesai">
-                                        <div class="flex items-center gap-3 pl-2">
-                                            <input type="checkbox" id="w-current" onchange="toggleWorkEnd()"
-                                                class="w-5 h-5 accent-cyan-500 rounded">
-                                            <label for="w-current"
-                                                class="text-xs font-bold text-slate-500 uppercase tracking-widest">Active</label>
-                                        </div>
-                                    </div>
-                                    <textarea id="w-desc" rows="4" class="tech-input"
-                                        placeholder="Tanggung jawab kerja..."></textarea>
-                                </div>
-
-                                <div id="form-education" class="hidden space-y-6">
-                                    <div class="grid grid-cols-2 gap-6">
-                                        <input type="text" id="e-major" class="tech-input" placeholder="Jurusan">
-                                        <input type="text" id="e-school" class="tech-input" placeholder="Institusi">
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-6">
-                                        <input type="number" id="e-start" class="tech-input" placeholder="Tahun Masuk">
-                                        <input type="number" id="e-end" class="tech-input" placeholder="Tahun Lulus">
-                                    </div>
-                                    <textarea id="e-desc" rows="3" class="tech-input"
-                                        placeholder="Pencapaian akademis..."></textarea>
-                                </div>
-
-                                <div id="form-profile" class="hidden space-y-6">
-                                    <div class="grid grid-cols-2 gap-6">
-                                        <input type="text" id="pr-name" class="tech-input" placeholder="Nama Lengkap">
-                                        <input type="text" id="pr-title" class="tech-input"
-                                            placeholder="Title Pekerjaan">
-                                    </div>
-                                    <input type="text" id="pr-skills" class="tech-input"
-                                        placeholder="Skills (Pisahkan dengan koma)">
-                                    <textarea id="pr-bio" rows="4" class="tech-input"
-                                        placeholder="Bio singkat..."></textarea>
-                                </div>
-
-                            </div>
+            <form onsubmit="handleUpload(event)" class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <div class="xl:col-span-2 space-y-6">
+                    <div class="glass p-8 rounded-3xl space-y-6">
+                        <div id="form-project" class="space-y-4">
+                            <input type="text" id="p-title" class="tech-input" placeholder="Project Name">
+                            <textarea id="p-desc" class="tech-input" rows="3" placeholder="Description"></textarea>
+                            <input type="url" id="p-link" class="tech-input" placeholder="Live Link">
+                            <input type="text" id="p-tech" class="tech-input" placeholder="Tech Stack (comma separated)">
                         </div>
-
-                        <div class="space-y-8">
-                            <div id="media-section" class="main-card p-8">
-                                <label class="label-tech">Media Content</label>
-                                <div id="preview-area"
-                                    class="mb-6 hidden border-2 border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
-                                    <img id="image-display" class="w-full aspect-video object-cover">
-                                </div>
-                                <div
-                                    class="relative group border-2 border-dashed border-slate-800 rounded-3xl p-8 text-center hover:border-cyan-500/50 transition-all cursor-pointer">
-                                    <input type="file" id="main-file" onchange="handlePreview(event)"
-                                        class="absolute inset-0 opacity-0 cursor-pointer">
-                                    <svg class="w-10 h-10 text-slate-600 mx-auto mb-3" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                                    </svg>
-                                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Pilih Gambar
-                                    </p>
-                                </div>
-                            </div>
-                            <button type="submit" id="btn-submit"
-                                class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-6 rounded-3xl transition-all shadow-2xl shadow-cyan-500/30 active:scale-95 uppercase tracking-widest">Upload
-                                Content</button>
-                            <p id="status-msg" class="text-center text-xs font-mono font-bold h-4 mt-6"></p>
+                        <div id="form-certificate" class="hidden space-y-4">
+                            <input type="text" id="c-title" class="tech-input" placeholder="Certificate Name">
+                            <input type="text" id="c-issuer" class="tech-input" placeholder="Issuer">
+                            <input type="number" id="c-year" class="tech-input" placeholder="Year">
+                            <input type="url" id="c-link" class="tech-input" placeholder="Verification Link">
                         </div>
-                    </div>
-                </form>
-
-                <!-- Menampilkan Tabel Data -->
-                <div id="table-container" class="hidden mt-12 main-card fade-in">
-                    <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
-                        <h3 id="table-title" class="text-xl font-bold tracking-tight flex items-center gap-3">
-                            <span class="w-2 h-6 bg-cyan-500 rounded"></span> Data Tersimpan
-                        </h3>
-                        <button type="button" onclick="loadTableData()"
-                            class="text-cyan-400 hover:text-white transition-colors text-xs font-bold mono uppercase tracking-widest flex items-center gap-2">
-                            ⟳ Refresh
-                        </button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm whitespace-nowrap">
-                            <thead id="dyn-table-head">
-                            </thead>
-                            <tbody id="dyn-table-body" class="divide-y divide-slate-800/50">
-                                <tr>
-                                    <td colspan="5" class="px-4 py-8 text-center text-slate-500 italic">Memuat data...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div id="form-work" class="hidden space-y-4">
+                            <input type="text" id="w-job" class="tech-input" placeholder="Position">
+                            <input type="text" id="w-company" class="tech-input" placeholder="Company">
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="number" id="w-start" class="tech-input" placeholder="Start Year">
+                                <input type="text" id="w-end" class="tech-input" placeholder="End Year/Present">
+                            </div>
+                            <textarea id="w-desc" class="tech-input" rows="3" placeholder="Responsibilities"></textarea>
+                        </div>
+                        <div id="form-education" class="hidden space-y-4">
+                            <input type="text" id="e-major" class="tech-input" placeholder="Major">
+                            <input type="text" id="e-school" class="tech-input" placeholder="Institution">
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="number" id="e-start" class="tech-input" placeholder="Start Year">
+                                <input type="number" id="e-end" class="tech-input" placeholder="Graduation Year">
+                            </div>
+                            <textarea id="e-desc" class="tech-input" rows="2" placeholder="Short description"></textarea>
+                        </div>
+                        <div id="form-profile" class="hidden space-y-4">
+                            <input type="text" id="pr-name" class="tech-input" placeholder="Full Name">
+                            <input type="text" id="pr-title" class="tech-input" placeholder="Professional Title">
+                            <input type="text" id="pr-skills" class="tech-input" placeholder="Skills (comma separated)">
+                            <textarea id="pr-bio" class="tech-input" rows="4" placeholder="Short Bio"></textarea>
+                        </div>
                     </div>
                 </div>
 
+                <div class="space-y-6">
+                    <div class="glass p-6 rounded-3xl text-center">
+                        <label class="block text-xs font-bold text-slate-500 mb-4 uppercase">Content Media</label>
+                        <div id="preview-area" class="hidden mb-4 rounded-xl overflow-hidden border border-slate-700">
+                            <img id="image-display" class="w-full aspect-video object-cover">
+                        </div>
+                        <input type="file" id="main-file" onchange="handlePreview(event)" class="tech-input text-xs">
+                    </div>
+                    <button type="submit" id="btn-submit" class="w-full bg-cyan-500 text-slate-950 font-bold py-4 rounded-2xl hover:scale-[1.02] transition active:scale-95">UPLOAD CONTENT</button>
+                    <p id="status-msg" class="text-center text-[10px] mono font-bold"></p>
+                </div>
+            </form>
+            
+            <div id="table-view" class="mt-12 glass p-8 rounded-3xl overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="text-slate-500 uppercase text-[10px] border-b border-slate-800">
+                        <tr><th class="pb-4">Entry Name</th><th class="pb-4">Detail</th><th class="pb-4 text-right">Action</th></tr>
+                    </thead>
+                    <tbody id="data-list" class="divide-y divide-slate-800"></tbody>
+                </table>
             </div>
         </main>
     </div>
@@ -326,325 +114,108 @@
     <script>
         let currentTab = 'project';
         let savedPIN = '';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxi0diq4LMgZgDvbRpmI4yp2FDVGpSzMu4lse_rb_J_hiEKWCT50EN9zjiMDL0PfSWVcQ/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxhU2uj1xiSoz3I5ur0OenG3L2FS2g9GiXvPdJ6HjrkKGqsluLxiZwcNHPL9SCSRq-cMw/exec';
 
-        function login() {
-            const pinInput = document.getElementById('pin-input');
-            const pin = pinInput.value;
-            const btnLogin = document.querySelector('#login-gate button');
-
-            if (!pin) return alert('PIN tidak boleh kosong!');
-            btnLogin.innerText = "AUTHENTICATING...";
-            btnLogin.disabled = true;
-
-            fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ pin: pin, kategori: 'verify' })
-            })
-                .then(response => response.json())
-                .then(result => {
-                    btnLogin.innerText = "Masuk Ke Sistem";
-                    btnLogin.disabled = false;
-
-                    if (result.status === 'error') {
-                        alert('Salah Kode PIN!');
-                        pinInput.value =skillupwithandre
-                        savedPIN = pin;
-                        document.getElementById('login-gate').classList.add('hidden');
-                        document.getElementById('dashboard').classList.remove('hidden');
-                    }
-                })
-                .catch(() => {
-                    btnLogin.innerText = "Masuk Ke Sistem";
-                    btnLogin.disabled = false;
-                    alert('Connection Error');
-                });
+        async function login() {
+            const pin = document.getElementById('pin-input').value;
+            const btn = document.getElementById('btn-login');
+            btn.innerText = "VERIFYING...";
+            
+            try {
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({pin, kategori: 'verify'}) });
+                const result = await res.json();
+                if(result.status === 'success') {
+                    savedPIN = pin;
+                    document.getElementById('login-gate').classList.add('hidden');
+                    document.getElementById('dashboard').classList.remove('hidden');
+                    switchTab('project');
+                } else { alert('PIN SALAH'); location.reload(); }
+            } catch(e) { alert('Error: Check Console'); }
         }
 
-        function logout() {
-            savedPIN = '';
-            location.reload();
+        function switchTab(id) {
+            currentTab = id;
+            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-'+id).classList.add('active');
+            
+            ['form-project', 'form-certificate', 'form-work', 'form-education', 'form-profile'].forEach(f => document.getElementById(f).classList.add('hidden'));
+            document.getElementById('form-'+id).classList.remove('hidden');
+            
+            loadList();
         }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('-translate-x-full');
-            document.getElementById('sidebar-overlay').classList.toggle('hidden');
-        }
-
-        function switchTab(tabId) {
-            currentTab = tabId;
-            document.querySelectorAll('.sidebar-item').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-
-            const headers = {
-                'project': ['Kelola Proyek', 'Deploy your works to the cloud storage.'],
-                'certificate': ['Kelola Sertifikat', 'Verification of skillsets.'],
-                'work': ['Pengalaman', 'Professional career records.'],
-                'education': ['Edukasi', 'Academic background history.'],
-                'profile': ['Profil Utama', 'Manage your digital identity.']
-            };
-
-            document.getElementById('content-title').innerText = headers[tabId][0];
-            document.getElementById('content-desc').innerText = headers[tabId][1];
-
-            ['form-project', 'form-certificate', 'form-work', 'form-education', 'form-profile'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-            document.getElementById(`form-${tabId}`).classList.remove('hidden');
-
-            const tableContainer = document.getElementById('table-container');
-            if (tableContainer) {
-                if (tabId !== 'profile') {
-                    tableContainer.classList.remove('hidden');
-                    loadTableData(tabId);
-                } else {
-                    tableContainer.classList.add('hidden');
-                    loadProfileData();
-                }
-            }
-
-            const mediaSection = document.getElementById('media-section');
-            if (mediaSection) {
-                if (tabId === 'work' || tabId === 'education') {
-                    mediaSection.classList.add('hidden');
-                } else {
-                    mediaSection.classList.remove('hidden');
-                }
-            }
-
-            if (window.innerWidth < 1024) toggleSidebar();
-        }
-
-        function toggleWorkEnd() {
-            const isCurrent = document.getElementById('w-current').checked;
-            const endInput = document.getElementById('w-end');
-            if (isCurrent) {
-                endInput.value = "Sekarang";
-                endInput.disabled = true;
-                endInput.style.opacity = "0.4";
-            } else {
-                endInput.value = "";
-                endInput.disabled = false;
-                endInput.style.opacity = "1";
-            }
-        }
-
-        function handlePreview(event) {
-            const file = event.target.files[0];
-            if (file && file.type.startsWith('image/')) {
+        function handlePreview(e) {
+            const file = e.target.files[0];
+            if(file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('image-display').src = e.target.result;
+                reader.onload = (ex) => {
+                    document.getElementById('image-display').src = ex.target.result;
                     document.getElementById('preview-area').classList.remove('hidden');
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function handleUpload(e) {
+        async function handleUpload(e) {
             e.preventDefault();
             const btn = document.getElementById('btn-submit');
             const status = document.getElementById('status-msg');
+            btn.disabled = true; status.innerText = "UPLOADING...";
+
+            let payload = { pin: savedPIN, kategori: currentTab, content: {} };
             const fileInput = document.getElementById('main-file');
 
-            let payload = { pin: savedPIN, kategori: currentTab, timestamp: new Date().toISOString(), content: {} };
+            if(currentTab === 'project') payload.content = { title: document.getElementById('p-title').value, desc: document.getElementById('p-desc').value, link: document.getElementById('p-link').value, tech: document.getElementById('p-tech').value };
+            else if(currentTab === 'certificate') payload.content = { title: document.getElementById('c-title').value, issuer: document.getElementById('c-issuer').value, year: document.getElementById('c-year').value, link: document.getElementById('c-link').value };
+            else if(currentTab === 'work') payload.content = { job: document.getElementById('w-job').value, company: document.getElementById('w-company').value, start: document.getElementById('w-start').value, end: document.getElementById('w-end').value, desc: document.getElementById('w-desc').value };
+            else if(currentTab === 'education') payload.content = { major: document.getElementById('e-major').value, school: document.getElementById('e-school').value, start: document.getElementById('e-start').value, end: document.getElementById('e-end').value, desc: document.getElementById('e-desc').value };
+            else payload.content = { name: document.getElementById('pr-name').value, title: document.getElementById('pr-title').value, skills: document.getElementById('pr-skills').value, bio: document.getElementById('pr-bio').value };
 
-            // PENGAMBILAN DATA BERDASARKAN ID YANG BENAR
-            if (currentTab === 'project') {
-                payload.content = { title: document.getElementById('p-title').value, desc: document.getElementById('p-desc').value, link: document.getElementById('p-link').value, tech: document.getElementById('p-tech').value };
-            } else if (currentTab === 'certificate') {
-                payload.content = { title: document.getElementById('c-title').value, issuer: document.getElementById('c-issuer').value, year: document.getElementById('c-year').value, link: document.getElementById('c-link').value };
-            } else if (currentTab === 'work') {
-                payload.content = { job: document.getElementById('w-job').value, company: document.getElementById('w-company').value, start: document.getElementById('w-start').value, end: document.getElementById('w-end').value, desc: document.getElementById('w-desc').value };
-            } else if (currentTab === 'education') {
-                payload.content = { major: document.getElementById('e-major').value, school: document.getElementById('e-school').value, start: document.getElementById('e-start').value, end: document.getElementById('e-end').value, desc: document.getElementById('e-desc').value };
-            } else {
-                // PROFILE SUDAH DITAMBAHKAN SKILLS
-                payload.content = { name: document.getElementById('pr-name').value, title: document.getElementById('pr-title').value, skills: document.getElementById('pr-skills').value, bio: document.getElementById('pr-bio').value };
-            }
-
-            btn.disabled = true;
-            btn.innerText = "UPLOADING...";
-            status.innerText = "SYNCING WITH DATABASE...";
-            status.className = "text-center text-[10px] font-mono font-bold text-cyan-400";
-
-            const send = (p) => {
-                fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(p) })
-                    .then(r => r.json()).then(res => {
-                        btn.disabled = false;
-                        btn.innerText = "Upload Content";
-                        if (res.status === 'success') {
-                            status.innerText = "SUCCESS: DATA SYNCED";
-                            status.className = "text-center text-[10px] font-mono font-bold text-green-500 uppercase";
-                            document.getElementById('main-form').reset();
-                            document.getElementById('preview-area').classList.add('hidden');
-                        } else {
-                            status.innerText = "ERROR: " + res.message;
-                            status.className = "text-center text-[10px] font-mono font-bold text-red-500 uppercase";
-                        }
-                        setTimeout(() => { status.innerText = ""; }, 4000);
-                    }).catch(() => {
-                        btn.disabled = false;
-                        btn.innerText = "Upload Content";
-                        status.innerText = "SERVER TIMEOUT";
-                        status.className = "text-center text-[10px] font-mono font-bold text-red-500 uppercase";
-                    });
+            const send = async (p) => {
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(p) });
+                const r = await res.json();
+                btn.disabled = false;
+                if(r.status === 'success') {
+                    status.innerText = "SUCCESS!";
+                    document.getElementById('main-form').reset();
+                    document.getElementById('preview-area').classList.add('hidden');
+                    loadList();
+                } else { status.innerText = "ERROR: " + r.message; }
             };
 
-            if (fileInput.files.length > 0) {
+            if(fileInput.files[0]) {
                 const r = new FileReader();
-                r.onload = function (eEvent) {
-                    payload.fileBase64 = eEvent.target.result.split(',')[1];
+                r.onload = (ex) => {
+                    payload.fileBase64 = ex.target.result.split(',')[1];
                     payload.fileName = fileInput.files[0].name;
                     payload.mimeType = fileInput.files[0].type;
                     send(payload);
                 };
                 r.readAsDataURL(fileInput.files[0]);
-            } else { send(payload); }
+            } else send(payload);
         }
 
-        async function loadTableData(type = currentTab) {
-            const thead = document.getElementById('dyn-table-head');
-            const tbody = document.getElementById('dyn-table-body');
-            const title = document.getElementById('table-title');
-
-            const tabMap = {
-                'project': { sheet: 'Project', label: 'Data Proyek' },
-                'certificate': { sheet: 'Sertifikat', label: 'Data Sertifikat' },
-                'work': { sheet: 'Work', label: 'Data Pengalaman' },
-                'education': { sheet: 'Education', label: 'Data Edukasi' }
-            };
-
-            const config = tabMap[type];
-            if (!config) return;
-
-            title.innerHTML = `<span class="w-2 h-6 bg-cyan-500 rounded"></span> ${config.label}`;
-            tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-cyan-400 animate-pulse mono text-xs">FETCHING_DATA...</td></tr>';
-
+        async function loadList() {
+            const list = document.getElementById('data-list');
+            list.innerHTML = '<tr><td colspan="3" class="py-4 text-center animate-pulse">Loading...</td></tr>';
+            const tabMap = {project:'Project', certificate:'Sertifikat', work:'Work', education:'Education', profile:'Profile'};
+            
             try {
-                const res = await fetch(`${API_URL}?tab=${config.sheet}`);
+                const res = await fetch(`${API_URL}?tab=${tabMap[currentTab]}`);
                 const data = await res.json();
-
-                if (!data || data.length === 0) {
-                    thead.innerHTML = '';
-                    tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-8 text-center text-slate-500 italic text-sm">Belum ada data ${config.label.toLowerCase()} terupload.</td></tr>`;
-                    return;
-                }
-
-                if (type === 'project') {
-                    thead.innerHTML = '<tr class="text-slate-500 uppercase tracking-widest border-b border-slate-800/50"><th class="px-4 py-3 font-semibold">Nama Proyek</th><th class="px-4 py-3 font-semibold">Teknologi</th><th class="px-4 py-3 font-semibold text-right">Aksi</th></tr>';
-                } else if (type === 'certificate') {
-                    thead.innerHTML = '<tr class="text-slate-500 uppercase tracking-widest border-b border-slate-800/50"><th class="px-4 py-3 font-semibold">Tahun</th><th class="px-4 py-3 font-semibold">Nama Sertifikat</th><th class="px-4 py-3 font-semibold">Penerbit</th><th class="px-4 py-3 font-semibold text-right">Aksi</th></tr>';
-                } else if (type === 'work') {
-                    thead.innerHTML = '<tr class="text-slate-500 uppercase tracking-widest border-b border-slate-800/50"><th class="px-4 py-3 font-semibold">Posisi</th><th class="px-4 py-3 font-semibold">Perusahaan</th><th class="px-4 py-3 font-semibold">Periode</th><th class="px-4 py-3 font-semibold text-right">Aksi</th></tr>';
-                } else if (type === 'education') {
-                    thead.innerHTML = '<tr class="text-slate-500 uppercase tracking-widest border-b border-slate-800/50"><th class="px-4 py-3 font-semibold">Jurusan</th><th class="px-4 py-3 font-semibold">Kampus</th><th class="px-4 py-3 font-semibold">Periode</th><th class="px-4 py-3 font-semibold text-right">Aksi</th></tr>';
-                }
-
-                tbody.innerHTML = data.map(item => {
-                    let cols = '';
-                    let delId = '';
-                    let actionLinks = '';
-
-                    if (type === 'project') {
-                        delId = item['Nama Project'];
-                        if (item['Link']) actionLinks = `<a href="${item['Link']}" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 mono mr-3">🔗 DEMO</a>`;
-                        cols = `<td class="px-4 py-3 font-semibold text-white">${item['Nama Project'] || '-'}</td><td class="px-4 py-3 text-cyan-400 text-xs mono">${item['Teknologi'] || '-'}</td>`;
-                    } else if (type === 'certificate') {
-                        delId = item['Nama Sertifikat'];
-                        if (item['URL File']) actionLinks = `<a href="${item['URL File']}" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 mono mr-3">📂 FILE</a>`;
-                        cols = `<td class="px-4 py-3 text-cyan-500 font-mono text-xs">${item['Tahun'] || '-'}</td><td class="px-4 py-3 font-semibold text-white">${item['Nama Sertifikat'] || '-'}</td><td class="px-4 py-3 text-slate-400">${item['Penerbit'] || '-'}</td>`;
-                    } else if (type === 'work') {
-                        delId = item['Posisi'];
-                        cols = `<td class="px-4 py-3 font-semibold text-white">${item['Posisi'] || '-'}</td><td class="px-4 py-3 text-slate-400">${item['Perusahaan'] || '-'}</td><td class="px-4 py-3 text-cyan-500 font-mono text-xs">${item['Tahun Mulai']} - ${item['Tahun Akhir']}</td>`;
-                    } else if (type === 'education') {
-                        delId = item['Jurusan'];
-                        cols = `<td class="px-4 py-3 font-semibold text-white">${item['Jurusan'] || '-'}</td><td class="px-4 py-3 text-slate-400">${item['Kampus'] || '-'}</td><td class="px-4 py-3 text-cyan-500 font-mono text-xs">${item['Tahun Mulai']} - ${item['Tahun Akhir']}</td>`;
-                    }
-
-                    return `<tr class="hover:bg-slate-800/30 transition-colors">${cols}<td class="px-4 py-3 text-right"><div class="flex items-center justify-end">${actionLinks}<button onclick="deleteData('${type}', '${String(delId).replace(/'/g, "\\'")}')" class="text-xs text-red-500 hover:text-red-400 mono font-bold uppercase transition-colors">❌ DEL</button></div></td></tr>`;
+                list.innerHTML = data.map(item => {
+                    const title = item['Nama Project'] || item['Nama Sertifikat'] || item['Posisi'] || item['Jurusan'] || item['Nama Lengkap'];
+                    const detail = item['Teknologi'] || item['Penerbit'] || item['Perusahaan'] || item['Kampus'] || item['Title'];
+                    return `<tr><td class="py-4 font-bold">${title}</td><td class="text-slate-400">${detail}</td><td class="text-right"><button onclick="deleteRow('${tabMap[currentTab]}','${title}')" class="text-red-500">DELETE</button></td></tr>`;
                 }).join('');
-            } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-red-500 text-xs mono">FAILED_TO_LOAD_DATA</td></tr>';
-            }
+            } catch(e) { list.innerHTML = ''; }
         }
 
-        function deleteData(type, id) {
-            const warningMsg = `Yakin ingin menghapus ${id}?\n\nCatatan: Supaya ini berhasil, Apps Script Google Sheet Anda harus memiliki blok logika untuk menerima kategori "delete", "tab", dan membaca "id" di doPost().`;
-            if (!confirm(warningMsg)) return;
-
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "DELETING...";
-            btn.disabled = true;
-
-            const tabMap = { 'project': 'Project', 'certificate': 'Sertifikat', 'work': 'Work', 'education': 'Education' };
-
-            fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ pin: savedPIN, kategori: 'delete', tab: tabMap[type], id: id })
-            })
-                .then(r => r.json())
-                .then(res => {
-                    if (res.status === 'success') {
-                        loadTableData(type);
-                    } else {
-                        alert("Gagal menghapus! " + (res.message || "Pastikan backend support delete."));
-                        btn.innerText = originalText;
-                        btn.disabled = false;
-                    }
-                })
-                .catch(() => {
-                    alert("Koneksi gagal atau backend Apps Script belum menangani respon delete.");
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                });
-        }
-
-        async function loadProfileData() {
-            const titleEl = document.getElementById('pr-title');
-            if (titleEl.dataset.loaded) return;
-
-            const status = document.getElementById('status-msg');
-            const origStatus = status.innerText;
-            status.innerText = "FETCHING PROFILE DATA...";
-            status.className = "text-center text-[10px] font-mono font-bold text-cyan-400";
-
-            try {
-                const res = await fetch(`${API_URL}?tab=Profile`);
-                const data = await res.json();
-
-                if (data && data.length > 0) {
-                    const p = data[0];
-                    if (p['Nama Lengkap']) document.getElementById('pr-name').value = p['Nama Lengkap'];
-                    if (p['Title']) document.getElementById('pr-title').value = p['Title'];
-                    if (p['Skills']) document.getElementById('pr-skills').value = p['Skills'];
-                    if (p['Bio']) document.getElementById('pr-bio').value = p['Bio'];
-
-                    if (p['URL Foto'] || p['URL Foto Profil']) {
-                        const url = p['URL Foto'] || p['URL Foto Profil'];
-                        if (url && url !== "no_file") {
-                            const match = String(url).match(/[-\w]{25,}/);
-                            const imgUrl = match ? `https://drive.google.com/thumbnail?id=${match[0]}&sz=w800` : url;
-                            document.getElementById('image-display').src = imgUrl;
-                            document.getElementById('preview-area').classList.remove('hidden');
-                        }
-                    }
-
-                    titleEl.dataset.loaded = "true";
-                    status.innerText = "";
-                } else {
-                    status.innerText = "";
-                }
-            } catch (err) {
-                status.innerText = "FAILED TO FETCH PROFILE";
-                status.className = "text-center text-[10px] font-mono font-bold text-red-500 uppercase";
-                setTimeout(() => { status.innerText = origStatus; }, 3000);
-            }
+        async function deleteRow(tab, id) {
+            if(!confirm('Hapus data ini?')) return;
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify({pin: savedPIN, kategori: 'delete', tab, id}) });
+            loadList();
         }
     </script>
 </body>
-
 </html>

@@ -1,112 +1,372 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin System | Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
-        :root { --bg: #020617; --cyan: #22d3ee; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: white; }
-        .tech-input { width: 100%; background: black; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 0.75rem 1rem; color: white; outline: none; transition: 0.3s; }
-        .tech-input:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(34, 211, 238, 0.2); }
-        .sidebar-item { width: 100%; text-align: left; padding: 0.75rem 1rem; border-radius: 0.5rem; color: #94a3b8; transition: 0.3s; }
-        .sidebar-item.active { background: rgba(34, 211, 238, 0.1); color: var(--cyan); }
-        .glass { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        :root {
+            --bg: #020617;
+            --cyan: #22d3ee;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .tech-input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid #1e293b;
+            border-radius: 0.75rem;
+            padding: 0.875rem 1rem;
+            color: white;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.875rem;
+        }
+
+        .tech-input:focus {
+            border-color: var(--cyan);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.15);
+        }
+
+        .tech-input::placeholder {
+            color: #475569;
+        }
+
+        /* Sidebar & Mobile Nav Buttons */
+        .sidebar-item {
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            color: #64748b;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .sidebar-item:hover {
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-item.active {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--cyan);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
     </style>
 </head>
-<body class="min-h-screen">
 
-    <div id="login-gate" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950 p-6">
-        <div class="glass w-full max-w-md p-8 rounded-3xl text-center">
-            <h1 class="text-2xl font-bold mb-6">Verification Required</h1>
-            <input type="password" id="pin-input" placeholder="ENTER PIN" class="tech-input text-center text-2xl tracking-[0.5em] mb-4">
-            <button onclick="login()" id="btn-login" class="w-full bg-cyan-500 text-slate-950 font-bold py-3 rounded-xl hover:bg-cyan-400 transition">LOGIN SYSTEM</button>
+<body class="min-h-screen text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- Login Gate -->
+    <div id="login-gate"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-md p-4 sm:p-6">
+        <div
+            class="glass w-full max-w-sm sm:max-w-md p-6 sm:p-8 rounded-[2rem] text-center shadow-2xl shadow-cyan-900/10">
+            <div
+                class="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-cyan-500/20">
+                <span class="text-2xl">🔒</span>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-bold mb-6 text-white tracking-tight">System Access</h1>
+            <input type="password" id="pin-input" placeholder="••••"
+                class="tech-input text-center text-3xl tracking-[1em] mb-6 py-4 bg-slate-900 focus:bg-slate-800 font-bold"
+                autocomplete="off" inputmode="numeric">
+            <button onclick="login()" id="btn-login"
+                class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-slate-950 font-bold py-4 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg shadow-cyan-500/25">
+                VERIFY & LOGIN
+            </button>
         </div>
     </div>
 
     <div id="dashboard" class="hidden flex min-h-screen">
-        <aside class="w-64 glass p-6 border-r border-slate-800 hidden lg:flex flex-col">
-            <h2 class="text-xl font-bold mb-10 text-cyan-400 mono">ADMIN_PANEL</h2>
+        <!-- Desktop Sidebar -->
+        <aside class="w-64 glass p-6 border-r border-slate-800 hidden lg:flex flex-col h-screen sticky top-0">
+            <div class="mb-10 flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
+                    <span class="text-cyan-400 text-sm">⚡</span>
+                </div>
+                <h2 class="text-lg font-bold text-cyan-400 mono tracking-wider">ADMIN_PANEL</h2>
+            </div>
+
             <nav class="space-y-2 flex-1">
-                <button onclick="switchTab('project')" id="tab-project" class="sidebar-item active">📁 Projects</button>
-                <button onclick="switchTab('certificate')" id="tab-certificate" class="sidebar-item">📜 Certificates</button>
-                <button onclick="switchTab('work')" id="tab-work" class="sidebar-item">💼 Experience</button>
-                <button onclick="switchTab('education')" id="tab-education" class="sidebar-item">🎓 Education</button>
-                <button onclick="switchTab('profile')" id="tab-profile" class="sidebar-item">👤 Profile</button>
+                <button onclick="switchTab('project')" class="sidebar-item tab-btn-project active">
+                    <span class="mr-3 text-lg align-middle">📁</span> Projects
+                </button>
+                <button onclick="switchTab('certificate')" class="sidebar-item tab-btn-certificate">
+                    <span class="mr-3 text-lg align-middle">📜</span> Certificates
+                </button>
+                <button onclick="switchTab('work')" class="sidebar-item tab-btn-work">
+                    <span class="mr-3 text-lg align-middle">💼</span> Experience
+                </button>
+                <button onclick="switchTab('education')" class="sidebar-item tab-btn-education">
+                    <span class="mr-3 text-lg align-middle">🎓</span> Education
+                </button>
+                <button onclick="switchTab('profile')" class="sidebar-item tab-btn-profile">
+                    <span class="mr-3 text-lg align-middle">👤</span> Profile
+                </button>
             </nav>
-            <button onclick="location.reload()" class="text-red-400 text-sm font-bold">LOGOUT</button>
+
+            <button onclick="location.reload()"
+                class="flex items-center justify-center gap-2 text-red-400/80 hover:text-red-400 hover:bg-red-400/10 p-3 rounded-xl transition text-sm font-bold w-full mt-4 border border-transparent hover:border-red-400/20">
+                <span>🚪</span> LOGOUT
+            </button>
         </aside>
 
-        <main class="flex-1 p-6 lg:p-12 overflow-y-auto">
-            <header class="mb-10">
-                <h2 id="content-title" class="text-3xl font-bold">Kelola Proyek</h2>
-                <p id="content-desc" class="text-slate-400">Update your digital works.</p>
+        <!-- Mobile Bottom Navigation -->
+        <nav
+            class="lg:hidden fixed bottom-0 w-full glass border-t border-slate-700/50 flex justify-around items-center px-2 py-3 z-50 bg-slate-900/95 shadow-2xl shadow-black pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
+            <button onclick="switchTab('project')"
+                class="sidebar-item tab-btn-project active flex flex-col items-center justify-center gap-1 !p-2 !w-auto !rounded-xl !bg-transparent border-none">
+                <span class="text-xl sm:text-2xl drop-shadow-md pb-1">📁</span>
+                <span class="text-[10px] sm:text-xs">Projects</span>
+            </button>
+            <button onclick="switchTab('certificate')"
+                class="sidebar-item tab-btn-certificate flex flex-col items-center justify-center gap-1 !p-2 !w-auto !rounded-xl !bg-transparent border-none">
+                <span class="text-xl sm:text-2xl drop-shadow-md pb-1">📜</span>
+                <span class="text-[10px] sm:text-xs">Certifs</span>
+            </button>
+            <button onclick="switchTab('work')"
+                class="sidebar-item tab-btn-work flex flex-col items-center justify-center gap-1 !p-2 !w-auto !rounded-xl !bg-transparent border-none">
+                <span class="text-xl sm:text-2xl drop-shadow-md pb-1">💼</span>
+                <span class="text-[10px] sm:text-xs">Work</span>
+            </button>
+            <button onclick="switchTab('education')"
+                class="sidebar-item tab-btn-education flex flex-col items-center justify-center gap-1 !p-2 !w-auto !rounded-xl !bg-transparent border-none">
+                <span class="text-xl sm:text-2xl drop-shadow-md pb-1">🎓</span>
+                <span class="text-[10px] sm:text-xs">Education</span>
+            </button>
+            <button onclick="switchTab('profile')"
+                class="sidebar-item tab-btn-profile flex flex-col items-center justify-center gap-1 !p-2 !w-auto !rounded-xl !bg-transparent border-none">
+                <span class="text-xl sm:text-2xl drop-shadow-md pb-1">👤</span>
+                <span class="text-[10px] sm:text-xs">Profile</span>
+            </button>
+        </nav>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-12 pb-28 lg:pb-12 overflow-x-hidden w-full lg:max-w-6xl mx-auto">
+
+            <header class="flex justify-between items-start mb-8 lg:mb-12 w-full gap-4">
+                <div>
+                    <h2 id="content-title" class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
+                        Kelola Proyek</h2>
+                    <p id="content-desc" class="text-sm sm:text-base text-slate-400 mt-1 sm:mt-2">Update your digital
+                        portfolio.</p>
+                </div>
+                <button onclick="location.reload()"
+                    class="lg:hidden text-red-500 text-xs font-bold border border-red-500/30 px-3 py-2 rounded-lg bg-red-500/10 active:bg-red-500/20 active:scale-95 transition-all self-center">
+                    LOGOUT
+                </button>
             </header>
 
-            <form onsubmit="handleUpload(event)" class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <form id="main-form" onsubmit="handleUpload(event)" class="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Form Inputs Area -->
                 <div class="xl:col-span-2 space-y-6">
-                    <div class="glass p-8 rounded-3xl space-y-6">
-                        <div id="form-project" class="space-y-4">
-                            <input type="text" id="p-title" class="tech-input" placeholder="Project Name">
-                            <textarea id="p-desc" class="tech-input" rows="3" placeholder="Description"></textarea>
-                            <input type="url" id="p-link" class="tech-input" placeholder="Live Link">
-                            <input type="text" id="p-tech" class="tech-input" placeholder="Tech Stack (comma separated)">
-                        </div>
-                        <div id="form-certificate" class="hidden space-y-4">
-                            <input type="text" id="c-title" class="tech-input" placeholder="Certificate Name">
-                            <input type="text" id="c-issuer" class="tech-input" placeholder="Issuer">
-                            <input type="number" id="c-year" class="tech-input" placeholder="Year">
-                            <input type="url" id="c-link" class="tech-input" placeholder="Verification Link">
-                        </div>
-                        <div id="form-work" class="hidden space-y-4">
-                            <input type="text" id="w-job" class="tech-input" placeholder="Position">
-                            <input type="text" id="w-company" class="tech-input" placeholder="Company">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="number" id="w-start" class="tech-input" placeholder="Start Year">
-                                <input type="text" id="w-end" class="tech-input" placeholder="End Year/Present">
+                    <div class="glass p-5 lg:p-8 rounded-2xl lg:rounded-3xl">
+
+                        <div id="form-project" class="space-y-4 sm:space-y-5">
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Project Name</label>
+                                <input type="text" id="p-title" class="tech-input">
                             </div>
-                            <textarea id="w-desc" class="tech-input" rows="3" placeholder="Responsibilities"></textarea>
-                        </div>
-                        <div id="form-education" class="hidden space-y-4">
-                            <input type="text" id="e-major" class="tech-input" placeholder="Major">
-                            <input type="text" id="e-school" class="tech-input" placeholder="Institution">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="number" id="e-start" class="tech-input" placeholder="Start Year">
-                                <input type="number" id="e-end" class="tech-input" placeholder="Graduation Year">
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Description</label>
+                                <textarea id="p-desc" class="tech-input" rows="4"></textarea>
                             </div>
-                            <textarea id="e-desc" class="tech-input" rows="2" placeholder="Short description"></textarea>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Live Link /
+                                        URL</label>
+                                    <input type="url" id="p-link" class="tech-input" placeholder="https://...">
+                                </div>
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Tech Stack</label>
+                                    <input type="text" id="p-tech" class="tech-input"
+                                        placeholder="React, Tailwind, etc">
+                                </div>
+                            </div>
                         </div>
-                        <div id="form-profile" class="hidden space-y-4">
-                            <input type="text" id="pr-name" class="tech-input" placeholder="Full Name">
-                            <input type="text" id="pr-title" class="tech-input" placeholder="Professional Title">
-                            <input type="text" id="pr-skills" class="tech-input" placeholder="Skills (comma separated)">
-                            <textarea id="pr-bio" class="tech-input" rows="4" placeholder="Short Bio"></textarea>
+
+                        <div id="form-certificate" class="hidden space-y-4 sm:space-y-5">
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Certificate
+                                    Name</label>
+                                <input type="text" id="c-title" class="tech-input">
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Issuer /
+                                    Organization</label>
+                                <input type="text" id="c-issuer" class="tech-input">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Year</label>
+                                    <input type="number" id="c-year" class="tech-input">
+                                </div>
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Verification
+                                        Link</label>
+                                    <input type="url" id="c-link" class="tech-input" placeholder="https://...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="form-work" class="hidden space-y-4 sm:space-y-5">
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Position / Role</label>
+                                <input type="text" id="w-job" class="tech-input">
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Company</label>
+                                <input type="text" id="w-company" class="tech-input">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 sm:gap-5">
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Start Year</label>
+                                    <input type="number" id="w-start" class="tech-input">
+                                </div>
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">End Year /
+                                        'Present'</label>
+                                    <input type="text" id="w-end" class="tech-input">
+                                </div>
+                            </div>
+                            <div><label
+                                    class="block text-xs font-bold text-slate-400 mb-2 ml-1">Responsibilities</label>
+                                <textarea id="w-desc" class="tech-input" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <div id="form-education" class="hidden space-y-4 sm:space-y-5">
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Major / Degree</label>
+                                <input type="text" id="e-major" class="tech-input">
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Institution</label>
+                                <input type="text" id="e-school" class="tech-input">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 sm:gap-5">
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Start Year</label>
+                                    <input type="number" id="e-start" class="tech-input">
+                                </div>
+                                <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Graduation
+                                        Year</label>
+                                    <input type="number" id="e-end" class="tech-input">
+                                </div>
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Description
+                                    (Optional)</label>
+                                <textarea id="e-desc" class="tech-input" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div id="form-profile" class="hidden space-y-4 sm:space-y-5">
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Full Name</label>
+                                <input type="text" id="pr-name" class="tech-input">
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Professional
+                                    Title</label>
+                                <input type="text" id="pr-title" class="tech-input"
+                                    placeholder="e.g. Frontend Developer">
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Skills (comma
+                                    separated)</label>
+                                <input type="text" id="pr-skills" class="tech-input">
+                            </div>
+                            <div><label class="block text-xs font-bold text-slate-400 mb-2 ml-1">Bio</label>
+                                <textarea id="pr-bio" class="tech-input" rows="5"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Media Upload & Submit Area -->
                 <div class="space-y-6">
-                    <div class="glass p-6 rounded-3xl text-center">
-                        <label class="block text-xs font-bold text-slate-500 mb-4 uppercase">Content Media</label>
-                        <div id="preview-area" class="hidden mb-4 rounded-xl overflow-hidden border border-slate-700">
-                            <img id="image-display" class="w-full aspect-video object-cover">
+                    <div class="glass p-5 lg:p-6 rounded-2xl lg:rounded-3xl flex flex-col items-center">
+                        <label class="block text-xs font-bold text-slate-400 mb-4 uppercase tracking-widest">Image /
+                            Media</label>
+
+                        <div id="preview-area"
+                            class="hidden mb-6 w-full rounded-xl overflow-hidden border border-slate-700 shadow-lg bg-black/50 aspect-video flex-shrink-0">
+                            <img id="image-display" class="w-full h-full object-cover">
                         </div>
-                        <input type="file" id="main-file" onchange="handlePreview(event)" class="tech-input text-xs">
+
+                        <label for="main-file"
+                            class="w-full border-2 border-dashed border-slate-700 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all rounded-xl p-6 sm:p-8 cursor-pointer text-center group">
+                            <div
+                                class="w-12 h-12 bg-slate-800 group-hover:bg-cyan-500/20 text-slate-400 group-hover:text-cyan-400 rounded-full flex items-center justify-center mx-auto mb-3 transition-colors">
+                                <span class="text-xl">📸</span>
+                            </div>
+                            <span class="block text-sm font-semibold text-slate-300 group-hover:text-white mb-1">Select
+                                File</span>
+                            <span class="block text-xs text-slate-500">JPG, PNG, WEBP</span>
+                            <input type="file" id="main-file" onchange="handlePreview(event)" class="hidden"
+                                accept="image/*">
+                        </label>
                     </div>
-                    <button type="submit" id="btn-submit" class="w-full bg-cyan-500 text-slate-950 font-bold py-4 rounded-2xl hover:scale-[1.02] transition active:scale-95">UPLOAD CONTENT</button>
-                    <p id="status-msg" class="text-center text-[10px] mono font-bold"></p>
+
+                    <button type="submit" id="btn-submit"
+                        class="w-full bg-cyan-500 text-slate-950 font-bold text-sm sm:text-base py-4 sm:py-5 rounded-2xl hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all active:scale-[0.98]">
+                        UPLOAD CONTENT
+                    </button>
+                    <p id="status-msg" class="text-center text-xs mono font-bold text-cyan-400 min-h-[20px]"></p>
                 </div>
             </form>
-            
-            <div id="table-view" class="mt-12 glass p-8 rounded-3xl overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead class="text-slate-500 uppercase text-[10px] border-b border-slate-800">
-                        <tr><th class="pb-4">Entry Name</th><th class="pb-4">Detail</th><th class="pb-4 text-right">Action</th></tr>
-                    </thead>
-                    <tbody id="data-list" class="divide-y divide-slate-800"></tbody>
-                </table>
+
+            <!-- Table Data Area -->
+            <div id="table-view" class="mt-8 lg:mt-12 glass p-4 sm:p-6 lg:p-8 rounded-2xl lg:rounded-3xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-white">Current Data</h3>
+                    <button onclick="loadList()"
+                        class="text-slate-400 hover:text-cyan-400 p-2 rounded-lg hover:bg-white/5 transition"
+                        title="Refresh">
+                        🔄
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto w-full pb-2">
+                    <table class="w-full text-left text-sm min-w-[500px]">
+                        <thead
+                            class="text-slate-500 uppercase text-[10px] sm:text-xs tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="pb-4 font-semibold px-2">Entry Name</th>
+                                <th class="pb-4 font-semibold px-2">Detail</th>
+                                <th class="pb-4 font-semibold px-2 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-list" class="divide-y divide-slate-800/50">
+                            <!-- Data populated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
@@ -114,39 +374,91 @@
     <script>
         let currentTab = 'project';
         let savedPIN = '';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxhU2uj1xiSoz3I5ur0OenG3L2FS2g9GiXvPdJ6HjrkKGqsluLxiZwcNHPL9SCSRq-cMw/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzkhTk7ShnHbbjwO2CZ8bOgwlDP1eqFWmzBX-H5RuGy7WV-lPhG41H99ozauhvYvVSAdg/exec';
+
+        // Fix for iOS 100vh issue
+        const appHeight = () => {
+            const doc = document.documentElement;
+            doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+        }
+        window.addEventListener('resize', appHeight);
+        appHeight();
 
         async function login() {
             const pin = document.getElementById('pin-input').value;
             const btn = document.getElementById('btn-login');
             btn.innerText = "VERIFYING...";
-            
+
+            if (!pin) {
+                alert('Silakan masukkan PIN');
+                btn.innerText = "VERIFY & LOGIN";
+                return;
+            }
+
             try {
-                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({pin, kategori: 'verify'}) });
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ pin, kategori: 'verify' }) });
                 const result = await res.json();
-                if(result.status === 'success') {
+                if (result.status === 'success') {
                     savedPIN = pin;
                     document.getElementById('login-gate').classList.add('hidden');
                     document.getElementById('dashboard').classList.remove('hidden');
                     switchTab('project');
-                } else { alert('PIN SALAH'); location.reload(); }
-            } catch(e) { alert('Error: Check Console'); }
+                } else {
+                    alert('PIN SALAH');
+                    document.getElementById('pin-input').value = '';
+                    btn.innerText = "VERIFY & LOGIN";
+                }
+            } catch (e) {
+                alert('Error Connection!');
+                btn.innerText = "VERIFY & LOGIN";
+            }
         }
+
+        // Allow pressing Enter to login
+        document.getElementById('pin-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') login();
+        });
 
         function switchTab(id) {
             currentTab = id;
-            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-'+id).classList.add('active');
-            
-            ['form-project', 'form-certificate', 'form-work', 'form-education', 'form-profile'].forEach(f => document.getElementById(f).classList.add('hidden'));
-            document.getElementById('form-'+id).classList.remove('hidden');
-            
+
+            // Remove active status everywhere
+            document.querySelectorAll('.sidebar-item').forEach(b => {
+                b.classList.remove('active');
+                if (b.classList.contains('border-cyan-500/50')) {
+                    b.classList.remove('border-cyan-500/50', 'text-cyan-400');
+                }
+            });
+
+            // Add active to matching items
+            document.querySelectorAll('.tab-btn-' + id).forEach(b => {
+                b.classList.add('active');
+                if (window.innerWidth < 1024) {
+                    b.classList.add('text-cyan-400'); // specific for mobile icon color hack
+                }
+            });
+
+            // Hide all forms, show the selected one
+            ['form-project', 'form-certificate', 'form-work', 'form-education', 'form-profile'].forEach(f => {
+                document.getElementById(f).classList.add('hidden');
+            });
+            document.getElementById('form-' + id).classList.remove('hidden');
+
+            const titles = {
+                'project': 'Kelola Proyek',
+                'certificate': 'Kelola Sertifikat',
+                'work': 'Kelola Pengalaman',
+                'education': 'Kelola Pendidikan',
+                'profile': 'Kelola Profil'
+            };
+            document.getElementById('content-title').innerText = titles[id];
+
             loadList();
         }
 
         function handlePreview(e) {
             const file = e.target.files[0];
-            if(file) {
+            if (file) {
                 const reader = new FileReader();
                 reader.onload = (ex) => {
                     document.getElementById('image-display').src = ex.target.result;
@@ -160,30 +472,43 @@
             e.preventDefault();
             const btn = document.getElementById('btn-submit');
             const status = document.getElementById('status-msg');
-            btn.disabled = true; status.innerText = "UPLOADING...";
+            btn.disabled = true;
+            status.innerText = "UPLOADING...";
+            status.classList.remove('text-red-400');
+            status.classList.add('text-cyan-400');
 
             let payload = { pin: savedPIN, kategori: currentTab, content: {} };
             const fileInput = document.getElementById('main-file');
 
-            if(currentTab === 'project') payload.content = { title: document.getElementById('p-title').value, desc: document.getElementById('p-desc').value, link: document.getElementById('p-link').value, tech: document.getElementById('p-tech').value };
-            else if(currentTab === 'certificate') payload.content = { title: document.getElementById('c-title').value, issuer: document.getElementById('c-issuer').value, year: document.getElementById('c-year').value, link: document.getElementById('c-link').value };
-            else if(currentTab === 'work') payload.content = { job: document.getElementById('w-job').value, company: document.getElementById('w-company').value, start: document.getElementById('w-start').value, end: document.getElementById('w-end').value, desc: document.getElementById('w-desc').value };
-            else if(currentTab === 'education') payload.content = { major: document.getElementById('e-major').value, school: document.getElementById('e-school').value, start: document.getElementById('e-start').value, end: document.getElementById('e-end').value, desc: document.getElementById('e-desc').value };
+            if (currentTab === 'project') payload.content = { title: document.getElementById('p-title').value, desc: document.getElementById('p-desc').value, link: document.getElementById('p-link').value, tech: document.getElementById('p-tech').value };
+            else if (currentTab === 'certificate') payload.content = { title: document.getElementById('c-title').value, issuer: document.getElementById('c-issuer').value, year: document.getElementById('c-year').value, link: document.getElementById('c-link').value };
+            else if (currentTab === 'work') payload.content = { job: document.getElementById('w-job').value, company: document.getElementById('w-company').value, start: document.getElementById('w-start').value, end: document.getElementById('w-end').value, desc: document.getElementById('w-desc').value };
+            else if (currentTab === 'education') payload.content = { major: document.getElementById('e-major').value, school: document.getElementById('e-school').value, start: document.getElementById('e-start').value, end: document.getElementById('e-end').value, desc: document.getElementById('e-desc').value };
             else payload.content = { name: document.getElementById('pr-name').value, title: document.getElementById('pr-title').value, skills: document.getElementById('pr-skills').value, bio: document.getElementById('pr-bio').value };
 
             const send = async (p) => {
-                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(p) });
-                const r = await res.json();
-                btn.disabled = false;
-                if(r.status === 'success') {
-                    status.innerText = "SUCCESS!";
-                    document.getElementById('main-form').reset();
-                    document.getElementById('preview-area').classList.add('hidden');
-                    loadList();
-                } else { status.innerText = "ERROR: " + r.message; }
+                try {
+                    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(p) });
+                    const r = await res.json();
+                    btn.disabled = false;
+                    if (r.status === 'success') {
+                        status.innerText = "SUCCESS!";
+                        document.getElementById('main-form').reset();
+                        document.getElementById('preview-area').classList.add('hidden');
+                        loadList();
+                        setTimeout(() => status.innerText = "", 3000);
+                    } else {
+                        status.classList.replace('text-cyan-400', 'text-red-400');
+                        status.innerText = "ERROR: " + r.message;
+                    }
+                } catch (e) {
+                    btn.disabled = false;
+                    status.classList.replace('text-cyan-400', 'text-red-400');
+                    status.innerText = "ERROR: Connection failed";
+                }
             };
 
-            if(fileInput.files[0]) {
+            if (fileInput.files[0]) {
                 const r = new FileReader();
                 r.onload = (ex) => {
                     payload.fileBase64 = ex.target.result.split(',')[1];
@@ -197,25 +522,60 @@
 
         async function loadList() {
             const list = document.getElementById('data-list');
-            list.innerHTML = '<tr><td colspan="3" class="py-4 text-center animate-pulse">Loading...</td></tr>';
-            const tabMap = {project:'Project', certificate:'Sertifikat', work:'Work', education:'Education', profile:'Profile'};
-            
+            list.innerHTML = '<tr><td colspan="3" class="py-6 text-center text-sm font-semibold text-slate-400 animate-pulse">Memuat data...</td></tr>';
+            const tabMap = { project: 'Project', certificate: 'Sertifikat', work: 'Work', education: 'Education', profile: 'Profile' };
+
             try {
                 const res = await fetch(`${API_URL}?tab=${tabMap[currentTab]}`);
                 const data = await res.json();
+
+                if (data.length === 0) {
+                    list.innerHTML = '<tr><td colspan="3" class="py-6 text-center text-sm text-slate-500">Belum ada data</td></tr>';
+                    return;
+                }
+
                 list.innerHTML = data.map(item => {
-                    const title = item['Nama Project'] || item['Nama Sertifikat'] || item['Posisi'] || item['Jurusan'] || item['Nama Lengkap'];
-                    const detail = item['Teknologi'] || item['Penerbit'] || item['Perusahaan'] || item['Kampus'] || item['Title'];
-                    return `<tr><td class="py-4 font-bold">${title}</td><td class="text-slate-400">${detail}</td><td class="text-right"><button onclick="deleteRow('${tabMap[currentTab]}','${title}')" class="text-red-500">DELETE</button></td></tr>`;
+                    const title = item['Nama Project'] || item['Nama Sertifikat'] || item['Posisi'] || item['Jurusan'] || item['Nama Lengkap'] || '-';
+                    const detail = item['Teknologi'] || item['Penerbit'] || item['Perusahaan'] || item['Kampus'] || item['Title'] || '-';
+
+                    // Escape characters safely to avoid breaking HTML attributes
+                    const safeTitle = String(title).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    const safeDetail = String(detail).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+                    return `
+                    <tr class="hover:bg-slate-800/30 transition-colors group">
+                        <td class="py-4 px-2 font-semibold text-white max-w-[150px] sm:max-w-xs truncate" title="${safeTitle}">${title}</td>
+                        <td class="py-4 px-2 text-slate-400 max-w-[120px] sm:max-w-sm truncate" title="${safeDetail}">${detail}</td>
+                        <td class="py-4 px-2 text-right">
+                            <button type="button" data-tab="${tabMap[currentTab]}" data-id="${safeTitle}" onclick="deleteRow(this.dataset.tab, this.dataset.id)" 
+                                class="text-red-400 font-bold text-xs bg-red-400/10 px-3 py-2 rounded-lg hover:bg-red-500 hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-red-500/50">
+                                DELETE
+                            </button>
+                        </td>
+                    </tr>`;
                 }).join('');
-            } catch(e) { list.innerHTML = ''; }
+            } catch (e) {
+                list.innerHTML = '<tr><td colspan="3" class="py-6 text-center text-sm text-red-400">Gagal memuat data. Cek koneksi.</td></tr>';
+            }
         }
 
         async function deleteRow(tab, id) {
-            if(!confirm('Hapus data ini?')) return;
-            await fetch(API_URL, { method: 'POST', body: JSON.stringify({pin: savedPIN, kategori: 'delete', tab, id}) });
-            loadList();
+            // Restore special characters escaped previously
+            const cleanId = String(id).replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+            if (!confirm(`Hapus data "${cleanId}"?`)) return;
+
+            const list = document.getElementById('data-list');
+            list.innerHTML = `<tr><td colspan="3" class="py-6 text-center text-sm font-semibold text-red-400 animate-pulse">Menghapus data...</td></tr>`;
+
+            try {
+                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ pin: savedPIN, kategori: 'delete', tab, id: cleanId }) });
+                loadList();
+            } catch (e) {
+                alert("Gagal menghapus data!");
+                loadList();
+            }
         }
     </script>
 </body>
+
 </html>
